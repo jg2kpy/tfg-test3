@@ -987,63 +987,6 @@ poblacion_final = HP_MOEA_LOOP()
 # In[21]:
 
 
-from pymoo.indicators.hv import Hypervolume
-from pymoo.visualization.scatter import Scatter
-
-import matplotlib.pyplot as plt
-
-log = logger.logger_class('RESULTADOS')
-ref_point = np.zeros(n_obj)
-hv = Hypervolume(ref_point=ref_point)
-
-### POBLACIÓN FINAL
-print(f'FINAL:')
-fitnessF = poblacion_final.get_fitness_F()
-hv_value = hv.do(fitnessF)
-
-print(f'El hipervolumen de la población final es {hv_value}')
-print(f'La población final es de {len(poblacion_final.get_poblacion_X())} individuos')
-
-if fitnessF.shape[1] == 2:
-    plot_final = Scatter(
-        title="Fitness Distribution (Final Population)",
-        labels=["Profit", "Novelty"]
-    )
-    plot_final.add(fitnessF * -1, s=30, facecolors='none', edgecolors='r', label="Final Population")
-    plot_final.show()
-elif fitnessF.shape[1] == 3:
-    plot_final1 = Scatter(
-        title="Fitness Distribution (Final Population - Profit vs Novelty)",
-        labels=["Profit", "Novelty"]
-    )
-    plot_final1.add(fitnessF[:, [0, 1]] * -1, s=30, facecolors='none', edgecolors='r', label="Final Population")
-    plot_final1.show()
-
-    plot_final2 = Scatter(
-        title="Fitness Distribution (Final Population - Profit vs Third objective)",
-        labels=["Profit", "Third objective"]
-    )
-    plot_final2.add(fitnessF[:, [0, 2]] * -1, s=30, facecolors='none', edgecolors='r', label="Final Population")
-    plot_final2.show()
-
-    plot_final3 = Scatter(
-        title="Fitness Distribution (Final Population - Novelty vs Third objective)",
-        labels=["Novelty", "Third objective"]
-    )
-    plot_final3.add(fitnessF[:, [1, 2]] * -1, s=30, facecolors='none', edgecolors='r', label="Final Population")
-    plot_final3.show()
-
-    fig = plt.figure(figsize=(10, 7))
-    ax = fig.add_subplot(111, projection='3d')
-    ax.scatter(fitnessF[:, 0] * -1, fitnessF[:, 1], fitnessF[:, 2]  * -1, c='r', marker='o', label="Final Population")
-
-    ax.set_title("3D Fitness Distribution (Final Population)")
-    ax.set_xlabel("Profit")
-    ax.set_ylabel("Novelty")
-    ax.set_zlabel("Third objective")
-    ax.legend()
-    plt.show()
-
 
 # In[22]:
 
